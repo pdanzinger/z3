@@ -965,7 +965,7 @@ namespace nlsat {
             scoped_anum lower(m_am);
             scoped_anum upper(m_am);
             anum const & y_val = sample().value(y);
-            TRACE(nlsat_explain, tout << "adding literals for "; display_var(tout, m_solver, y); tout << " -> ";
+            TRACE(nlsat_explain, tout << "adding literals for y:" << y << " "; display_var(tout, m_solver, y); tout << " -> ";
                   m_am.display_decimal(tout, y_val); tout << "\n";);
             polynomial_ref p_lower(m_pm);
             unsigned i_lower = UINT_MAX;
@@ -975,8 +975,11 @@ namespace nlsat {
             unsigned sz = ps.size();
             for (unsigned k = 0; k < sz; k++) {
                 p = ps.get(k);
-                if (max_var(p) != y)
+                if (max_var(p) != y) {
+                    TRACE(nlsat_explain, tout << "continue\n";);
                     continue;
+                }
+                TRACE(nlsat_explain, tout << "looking for roots\n";);
                 roots.reset();
                 // Variable y is assigned in asgnm. We must temporarily unassign it.
                 // Otherwise, the isolate_roots procedure will assume p is a constant polynomial.
@@ -1227,8 +1230,8 @@ namespace nlsat {
                     m_todo.reset();
                     break;
                 }
-            TRACE(nlsat_explain, tout << "project loop, processing var "; display_var(tout, m_solver, x); tout << "\npolynomials\n";
-                display(tout, m_solver, ps); tout << "\n";);
+                TRACE(nlsat_explain, tout << "project loop, processing var "; display_var(tout, m_solver, x); tout << "\npolynomials\n";
+                      display(tout, m_solver, ps); tout << "\n";);
                 add_lcs(ps, x);
                 psc_discriminant(ps, x);
                 psc_resultant(ps, x);
