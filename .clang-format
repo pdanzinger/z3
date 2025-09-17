@@ -1,0 +1,92 @@
+# Z3 Theorem Prover - clang-format configuration
+# This configuration file standardizes code formatting across the Z3 codebase
+# Based on analysis of existing code style patterns in the repository
+
+# Use Google style as base and customize
+BasedOnStyle: Google
+
+# Basic formatting
+IndentWidth: 4
+UseTab: Never
+ColumnLimit: 0
+
+# Brace placement - Z3 uses attached braces consistently
+BreakBeforeBraces: Attach
+
+# Function and control structure formatting
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Always
+AllowShortCaseLabelsOnASingleLine: true
+
+# Spacing
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInAngles: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# Pointer and reference alignment - Z3 uses "Type * ptr" style
+PointerAlignment: Left
+
+# Namespace formatting - Z3 typically doesn't indent namespace contents
+NamespaceIndentation: None
+
+# Template formatting
+SpaceAfterTemplateKeyword: false
+
+# Constructor initializers
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerIndentWidth: 4
+
+# Function parameters and arguments
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: true
+BinPackParameters: true
+BinPackArguments: true
+
+# Include formatting
+SortIncludes: true
+IncludeBlocks: Regroup
+
+# Other settings
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignOperands: true
+AlignTrailingComments: true
+AllowAllConstructorInitializersOnNextLine: true
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+AlwaysBreakTemplateDeclarations: MultiLine
+BreakBeforeBinaryOperators: None
+BreakBeforeInheritanceComma: false
+BreakBeforeTernaryOperators: true
+BreakStringLiterals: true
+CompactNamespaces: false
+ContinuationIndentWidth: 4
+Cpp11BracedListStyle: true
+DerivePointerAlignment: false
+ExperimentalAutoDetectBinPacking: false
+FixNamespaceComments: false
+IndentCaseLabels: true
+IndentPPDirectives: None
+IndentWrappedFunctionNames: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 2
+ReflowComments: true
+SpaceAfterCStyleCast: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeRangeBasedForLoopColon: true
+# SpaceInEmptyBlockComment: true  # Not supported in this version
+Standard: Cpp11
+TabWidth: 4
+
+# Language-specific settings
+Language: Cpp
+
+# Disable formatting for specific areas if needed
+# Use // clang-format off and // clang-format on to disable/enable formatting
