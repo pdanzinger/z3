@@ -1229,28 +1229,29 @@ namespace nlsat {
             
             var x = m_todo.extract_max_polys(ps);
 
-            if (!levelwise_single_cell(ps, max_x)) { // on levelwise_single_cell failure continue with cdcac
-                polynomial_ref_vector samples(m_pm);
+            if (m_solver.apply_levelwise() && levelwise_single_cell(ps, max_x))
+                return;
+
+            polynomial_ref_vector samples(m_pm);
             
-                if (x < max_x)
-                    cac_add_cell_lits(ps, x);
+            if (x < max_x)
+                cac_add_cell_lits(ps, x);
             
-                while (true) {
-                    if (all_univ(ps, x) && m_todo.empty()) {
-                        m_todo.reset();
-                        break;
-                    }
-                    TRACE(nlsat_explain, tout << "project loop, processing var "; display_var(tout, m_solver, x); tout << "\npolynomials\n";
-                          display(tout, m_solver, ps); tout << "\n";);
-                    add_lcs(ps, x);
-                    psc_discriminant(ps, x);
-                    psc_resultant(ps, x);
-                
-                    if (m_todo.empty())
-                        break;
-                    x = m_todo.extract_max_polys(ps);
-                    cac_add_cell_lits(ps, x);
+            while (true) {
+                if (all_univ(ps, x) && m_todo.empty()) {
+                    m_todo.reset();
+                    break;
                 }
+                TRACE(nlsat_explain, tout << "project loop, processing var "; display_var(tout, m_solver, x); tout << "\npolynomials\n";
+                      display(tout, m_solver, ps); tout << "\n";);
+                add_lcs(ps, x);
+                psc_discriminant(ps, x);
+                psc_resultant(ps, x);
+                
+                if (m_todo.empty())
+                    break;
+                x = m_todo.extract_max_polys(ps);
+                cac_add_cell_lits(ps, x);
             }
         }
 
@@ -1731,9 +1732,10 @@ namespace nlsat {
             SASSERT(check_already_added());
             SASSERT(num > 0);
             TRACE(nlsat_explain, 
-                  tout << "[explain] set of literals is infeasible in the current interpretation\n"; 
+                  tout << "the infeasible clause:\n"; 
                   display(tout, m_solver, num, ls) << "\n";
-                  m_solver.display_assignment(tout);
+                  
+                  m_solver.display_assignment(tout << "assignment:\n");
                   );
             m_result = &result;
             process(num, ls);
