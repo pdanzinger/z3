@@ -1216,6 +1216,9 @@ namespace nlsat {
          */
         void project_cdcac(polynomial_ref_vector & ps, var max_x) {
             TRACE(nlsat_explain, tout << "max_x:" << max_x << std::endl;);
+            if (max_x == 0) {
+                std::cout << "*";
+            }
             if (ps.empty()) {
                 TRACE(nlsat_explain, tout << "ps.empty\n";);
                 return;
